@@ -1,4 +1,4 @@
-# LTProject
+# LTComponents
 
 Open Source Lightning Components.
 
