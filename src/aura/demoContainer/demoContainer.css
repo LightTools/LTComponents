@@ -1,9 +1,0 @@
-.THIS.demo-container
-.label-hidden
-.slds-form-element__label {
-    display: none;
-}
-.THIS.demo-container>.slds-box:not(.slds-page-header) {
-    margin-top: 0.75rem;
-    background: rgb(255, 255, 255);
-}
