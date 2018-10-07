@@ -1,0 +1,16 @@
+<aura:component extensible="true"
+                description="This component is an implementation of a batch processing mechanism.">
+
+    <!-- component variables -->
+    <aura:attribute name="status" type="String" access="private" description="Current status of the batch. Available states: preparing, processing, completed, aborted, failed."/>
+    <!-- component variables -->
+
+    <!-- component methods -->
+    <aura:method name="run" action="{! c.callMethod }" description="Method to run the batch. Returns true or false.">
+        <aura:attribute name="config" type="Object" description="This object should contain callback methods (handlers): 'start', 'execute', 'finish', 'fail', and value 'chunk' to set chunk size." />
+    </aura:method>
+    <aura:method name="abort" action="{! c.callMethod }" description="Method to abort the batch."/>
+    <aura:method name="getStatus" action="{! c.callMethod }" description="Method to get current status of the batch."/>
+    <!-- component methods -->
+
+</aura:component>
