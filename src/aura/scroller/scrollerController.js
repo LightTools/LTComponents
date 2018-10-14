@@ -1,7 +1,4 @@
 ({
-    initialize : function(component, event, helper) {
-        helper.addEventListeners(component);
-    },
     callMethod : function(component, event, helper) {
         switch (event.getParam("name")) {
             case "setPosition":

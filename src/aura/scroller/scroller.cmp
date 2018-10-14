@@ -19,10 +19,6 @@
     </aura:method>
     <!-- component methods -->
 
-    <!-- component handlers  -->
-    <aura:handler name="render" value="{! this }" action="{! c.initialize }"/>
-    <!-- /component handlers -->
-
     <!-- component content -->
     <div class="{! join(' ', 'lt-scroller', join(' ',
                    if (equals(v.direction, 'horizontal'), 'lt-scroller-direction_horizontal',
