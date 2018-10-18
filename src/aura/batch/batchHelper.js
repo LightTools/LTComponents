@@ -1,16 +1,22 @@
 ({
+    /**
+      * @description Method to run the batch.
+      * @param Object component - component reference.
+      * @param Object config - set of parameters for the batch. Should contain callback methods (handlers): 'start', 'execute', 'finish', 'fail', and value 'chunk' to set chunk size.
+      * @return Boolean - returns true if the batch was runned successfully, otherwise returns false.
+    */
     run : function(component, config) {
         // check if config is not empty and batch is not preparing or processing and save current state to result
-        let result = !$A.util.isEmpty(config) && !this.isProcessingOrPreparing(component);
+        const result = !$A.util.isEmpty(config) && !this.isProcessingOrPreparing(component);
         // run batch if result = true
         if (result === true) {
             // initialize batch values
-            let chunk = (
+            const chunk = (
                 config.hasOwnProperty("chunk") && !$A.util.isEmpty(config.chunk) ?
                 config.chunk :
                 1
-            ),
-            counter = 0,
+            );
+            let counter = 0,
             scope = null,
             data = null,
             eof = true,
@@ -65,9 +71,14 @@
         // return result
         return result;
     },
+    /**
+      * @description Method to abort the batch.
+      * @param Object component - component reference.
+      * @return Boolean - returns true if the batch was aborted successfully, otherwise returns false.
+    */
     abort : function(component) {
         // get batch status
-        let result = this.isProcessingOrPreparing(component);
+        const result = this.isProcessingOrPreparing(component);
         // if status is true
         if (result === true) {
             // abort the batch
@@ -76,11 +87,21 @@
         // return result
         return result;
     },
+    /**
+      * @description Method to get status of the batch.
+      * @param Object component - component reference.
+      * @return Boolean - returns true if status of the batch is preparing or processing, otherwise returns false.
+    */
     isProcessingOrPreparing : function(component) {
-        let status = component.get("v.status");
-        return ["preparing", "processing"].indexOf(status) !== -1;
+        return ["preparing", "processing"].indexOf(component.get("v.status")) !== -1;
     },
-
+    /**
+      * @description Method to perform the first iteration of the batch.
+      * @param Object component - component reference.
+      * @param Object scope - data returned by handler.
+      * @param Function handler - external callback function to handle the iteration. 
+      * @param Function callback - internal function to catch result of the method.
+    */
     start : function(component, scope, handler, callback) {
         // set batch status
         component.set("v.status", "preparing");
@@ -130,6 +151,15 @@
             }
         }.bind(this)));
     },
+    /**
+      * @description Method to perform iterations of the batch based on chunk size.
+      * @param Object component - component reference.
+      * @param Object scope - data the coming from 'start' method for further processing.
+      * @param Object data - data returned by handler.
+      * @param Integer index - index of iteration.
+      * @param Function handler - external callback function to handle the iteration. 
+      * @param Function callback - internal function to catch result of the method.
+    */
     execute : function(component, scope, data, index, handler, callback) {
         // set batch status
         component.set("v.status", "processing");
@@ -179,6 +209,14 @@
             }
         }.bind(this)));
     },
+    /**
+      * @description Method to perform the last iteration of the batch.
+      * @param Object component - component reference.
+      * @param Object scope - data returned by 'start' method(s).
+      * @param Object data - data returned by 'execute' method(s).
+      * @param Function handler - external callback function to handle the iteration. 
+      * @param Function callback - internal function to catch result of the method.
+    */
     finish : function(component, scope, data, handler, callback) {
         // set batch status
         component.set("v.status", "completed");
@@ -195,6 +233,13 @@
             }
         }        
     },
+    /**
+      * @description Method to handle errors in the batch.
+      * @param Object component - component reference.
+      * @param Object entry - name of the failed method.
+      * @param Object error - just an error message.
+      * @param Function handler - external callback function to handle the iteration. 
+    */
     fail : function(component, entry, error, handler) {
         // set batch status
         component.set("v.status", "failed");
