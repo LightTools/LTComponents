@@ -3,7 +3,7 @@
       * @description This is a common function to call Apex methods.
       * @param Object component - component reference.
       * @param String method - name of Apex method.
-      * @param Object callback - external function to handle response from server.
+      * @param Function callback - external function to handle response from server.
       * @param Object params - Apex method parameters.
       * @param Object options - optional params (background, abortable, storable, ignoreExisting - valid only if storable === true).
     */
@@ -43,7 +43,7 @@
     /**
       * @description This is a method to handle response from Apex and create result for callback function.
       * @param Object response - response from Apex.
-      * @param Object callback - external function to handle response from server.
+      * @param Function callback - external function to handle response from server.
     */
     handleApexResponse : function(response, callback) {
         // create result

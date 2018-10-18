@@ -8,7 +8,7 @@
     <!-- component variables -->
 
     <!-- component events -->
-    <aura:registerEvent name="onscroll" type="c:event"/>
+    <aura:registerEvent name="onscroll" type="c:event" description="Provides ability to handle scroll event very simply. Use event.getParams().data to get the event attributes." />
     <!-- /component events -->
 
     <!-- component methods -->
