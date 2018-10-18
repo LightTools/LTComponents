@@ -7,13 +7,17 @@
         try {
             // get scroll element
             let element = component.getElement();
+            // define listener options
+            const options = {
+                "passive": true
+            };
             // add touch move event listener, just for touch devices
             element.addEventListener("touchmove", $A.getCallback(function(event) {
                 if (component.isValid()) {
                     // prevent touch move event propagation
                     event.stopPropagation();
                 }
-            }));
+            }), options);
             // add scroll event listener
             element.addEventListener("scroll", $A.getCallback(function(event) {
                 if (component.isValid()) {
@@ -22,7 +26,7 @@
                         "data": event
                     });
                 }
-            }));
+            }), options);
         } catch(e) {
             console.error(e);
         }
