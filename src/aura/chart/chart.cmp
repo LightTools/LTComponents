@@ -1,0 +1,27 @@
+<aura:component extensible="true"
+                description="This component provides functionality to create fast and pretty charts based on Chart.js library.">
+
+    <!-- component public variables -->
+    <aura:attribute name="config" type="Object" access="public" description="Configuration for chart. For more information see Chart.js documentation: http://www.chartjs.org/docs/latest/."/>
+    <aura:attribute name="class" type="String" access="public" description="Assign any css class."/>
+    <!-- component public variables -->
+
+    <!-- component private variables -->
+    <aura:attribute name="instance" type="Object" access="private" description="This value is used to store reference to chart instance."/>
+    <!-- component private variables -->
+
+    <!-- component handlers  -->
+    <aura:handler name="init" value="{! this }" action="{! c.initialize }" description="Handler for initialization stage of the component."/>
+    <aura:handler name="change" value="{! v.config }" action="{! c.update }" description="Handler used to update chart view if config is changed."/>
+    <!-- /component handlers -->
+
+    <!-- component content -->
+    <div class="{! join(' ', 'lt-chart',
+                   if(not(empty(v.instance)), 'lt-chart_visible', ''),
+                   v.class) }">
+        <canvas aura:id="canvas" />
+        {! v.body }
+    </div>
+    <!-- /component content -->
+
+</aura:component>
