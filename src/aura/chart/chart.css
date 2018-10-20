@@ -1,13 +1,5 @@
 .THIS.lt-chart {
     position: relative;
-    opacity: 0;
-    transform: scale(0);
-    transition: opacity 0.4s,
-                transform 0.3s;
-}
-.THIS.lt-chart.lt-chart_visible {
-    opacity: 1;
-    transform: scale(1);
 }
 .THIS.lt-chart>canvas {
     max-width: 100%;

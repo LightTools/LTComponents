@@ -16,9 +16,7 @@
     <!-- /component handlers -->
 
     <!-- component content -->
-    <div class="{! join(' ', 'lt-chart',
-                   if(not(empty(v.instance)), 'lt-chart_visible', ''),
-                   v.class) }">
+    <div class="{! join(' ', 'lt-chart', v.class) }">
         <canvas aura:id="canvas" />
         {! v.body }
     </div>
