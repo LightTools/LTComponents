@@ -1,10 +1,10 @@
-<aura:component extensible="true"
+<aura:component implements="c:ui"
+                extensible="true"
                 description="Creates a container that enables native scrolling. Open and highly customizable alternative for ui:scrollerWrapper.">
 
     <!-- component variables -->
     <aura:attribute name="direction" type="String" default="both" access="public" description="Scroll direction: horizontal, vertical, both"/>
     <aura:attribute name="transform" type="Boolean" default="true" access="public" description="Use hardware acceleration (if this is supported by a browser) to make scrolling smooth."/>
-    <aura:attribute name="class" type="String" access="public" description="Assign any css class."/>
     <!-- component variables -->
 
     <!-- component events -->

@@ -1,9 +1,9 @@
-<aura:component extensible="true"
+<aura:component implements="c:ui"
+                extensible="true"
                 description="This component provides functionality to create fast and pretty charts based on Chart.js library.">
 
     <!-- component public variables -->
     <aura:attribute name="config" type="Object" access="public" description="Configuration for chart. For more information see Chart.js documentation: http://www.chartjs.org/docs/latest/."/>
-    <aura:attribute name="class" type="String" access="public" description="Assign any css class."/>
     <!-- component public variables -->
 
     <!-- component private variables -->
