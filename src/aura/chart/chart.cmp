@@ -18,7 +18,6 @@
     <!-- component content -->
     <div class="{! join(' ', 'lt-chart', v.class) }">
         <canvas aura:id="canvas" />
-        {! v.body }
     </div>
     <!-- /component content -->
 
