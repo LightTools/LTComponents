@@ -1,3 +1,0 @@
-<aura:interface description="Common interface for ui components.">
-    <aura:attribute name="class" type="String" description="Custom css classes."/>
-</aura:interface>

@@ -1,0 +1,9 @@
+<aura:interface description="Common interface for ui components.">
+
+    <!-- common variables -->
+    <aura:attribute name="id" type="String" description="Id of element."/>
+    <aura:attribute name="title" type="String" description="Title of element. This value will be displayed as a tooltip."/>
+    <aura:attribute name="class" type="String" description="Custom css classes."/>
+    <!-- /common variables -->
+
+</aura:interface>
