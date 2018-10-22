@@ -1,4 +1,4 @@
-<aura:component implements="c:ui"
+<aura:component implements="c:element"
                 extensible="true"
                 description="Creates a container that enables native scrolling. Open and highly customizable alternative for ui:scrollerWrapper.">
 
@@ -24,7 +24,9 @@
                    if (equals(v.direction, 'horizontal'), 'lt-scroller-direction_horizontal',
                    if (equals(v.direction, 'vertical'), 'lt-scroller-direction_vertical', 'lt-scroller-direction_both')),
                    if (v.transform, 'lt-scroller-transform', '')),
-                   v.class) }">
+                   v.class) }"
+            id="{! v.id }"
+            title="{! v.title }">
         {! v.body }
     </div>
     <!-- /component content -->

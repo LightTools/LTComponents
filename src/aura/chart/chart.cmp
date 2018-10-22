@@ -1,4 +1,4 @@
-<aura:component implements="c:ui"
+<aura:component implements="c:element"
                 extensible="true"
                 description="This component provides functionality to create fast and pretty charts based on Chart.js library.">
 
@@ -16,7 +16,9 @@
     <!-- /component handlers -->
 
     <!-- component content -->
-    <div class="{! join(' ', 'lt-chart', v.class) }">
+    <div class="{! join(' ', 'lt-chart', v.class) }"
+            id="{! v.id }"
+            title="{! v.title }">
         <canvas aura:id="canvas" />
     </div>
     <!-- /component content -->
