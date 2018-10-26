@@ -117,15 +117,16 @@
                 console.error(result.messages);
                 break;
             case "INCOMPLETE":
-                // log warning
-                console.warn("No response from server");
-                // add the warning to result
+                // add error to result
                 result.messages = [
                     createMessage(
-                        "WARNING",
-                        "No response from server"
+                        "ERROR",
+                        "No response from server or client is offline.",
+                        "503"
                     )
                 ];
+                // log error
+                console.error(result.messages);
                 break;
         }
         // return result if callback exists
