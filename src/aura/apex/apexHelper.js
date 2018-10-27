@@ -100,6 +100,9 @@
                     }
                 }
             };
+            // log errors
+            console.error(result);
+            // return result
             return result;
         };
         // check state
@@ -113,8 +116,6 @@
             case "ERROR":
                 // add the error(s) to result
                 result.messages = createErrors(response.getError());
-                // log errors
-                console.error(result.messages);
                 break;
             case "INCOMPLETE":
                 // add error to result
@@ -125,8 +126,6 @@
                         "503"
                     )
                 ];
-                // log error
-                console.error(result.messages);
                 break;
         }
         // return result if callback exists
