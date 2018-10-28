@@ -1,0 +1,27 @@
+<aura:component extensible="true"
+                description="Dynamic container to create components on the fly in any place of an application.">
+
+    <!-- component public variables -->
+    <aura:attribute name="config" type="List" access="public" description="Components along with attributes that need to be created. [[component name, {attributes}]]."/>
+    <!-- component public variables -->
+
+    <!-- component handlers  -->
+    <aura:handler name="init" value="{! this }" action="{! c.initialize }" description="Handler for initialization stage of the component."/>
+    <aura:handler name="change" value="{! v.config }" action="{! c.initialize }" description="Handler used to update component if config is changed."/>
+    <!-- /component handlers -->
+
+    <!-- component events -->
+    <aura:registerEvent name="onchange" type="c:event" description="Provides ability to handle changes in the component. Fired only for dynamic creation using append or config change." />
+    <!-- /component events -->
+
+    <!-- component methods -->
+    <aura:method name="append" action="{! c.callMethod }" description="Provides ability to add new components to existing body."> 
+        <aura:attribute name="config" type="List" required="true" description="Components along with attributes that need to be appended. [[component name, {attributes}]]." />
+    </aura:method>
+    <!-- component methods -->
+
+    <!-- component content -->
+    {! v.body }
+    <!-- /component content -->
+
+</aura:component>
