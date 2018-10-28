@@ -26,6 +26,7 @@
       * @param Object component - component reference.
       * @param Object params - set of parameters to create callback method.
       * @param Boolean wrapping - whether to use wrap feature.
+      * @return Function - function to handle response from server.
     */
     getCallback : function(component, params, wrapping) {
         // return callback
@@ -53,6 +54,7 @@
     /**
       * @description Method to create parameters for Apex method.
       * @param Object params - set of parameters to create callback method.
+      * @return Object - parameters for apex method.
     */
     wrapParams : function(params) {
         return {
@@ -69,6 +71,7 @@
     /**
       * @description Method to wrap records inside database response.
       * @param Object response - data from Apex.
+      * @return Object - response from server along with parsed records.
     */
     wrapResponse : function(response) {
         // create empty result
@@ -104,6 +107,7 @@
     /**
       * @description Method to wrap a record.
       * @param Object source - original record.
+      * @return Object - parsed record.
     */
     wrapRecord : function(source) {
         // create empty result

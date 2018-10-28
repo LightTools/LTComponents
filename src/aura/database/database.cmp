@@ -19,7 +19,7 @@
     </aura:method>
     <aura:method name="buildSOSL" action="{! c.callMethod }" description="Method to build SOSL query string."> 
         <aura:attribute name="config" type="Object" required="true" description="This object should contain search text, search entities and query conditions for SOSL." />
-        <aura:attribute name="callback" type="Object" description="External function to handle response from server." />
+        <aura:attribute name="callback" type="Function" description="External function to handle response from server." />
         <aura:attribute name="options" type="Object" description="Optional params (background, abortable, storable, ignoreExisting - valid only if storable === true)." />  
     </aura:method>
     <!-- /build methods -->
