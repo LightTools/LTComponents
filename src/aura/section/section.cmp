@@ -1,0 +1,65 @@
+<aura:component implements="c:element"
+                extensible="true"
+                description="Provides ability to wrap any content into the one collapsible section.">
+
+    <!-- component variables -->
+    <aura:attribute name="expanded" type="Boolean" default="false" access="public" description="Current state of the section: expanded/collapsed."/>
+    <aura:attribute name="nubbin" type="Boolean" default="true" access="public" description="Enable/disable nubbin."/>
+    <aura:attribute name="nubbinHint" type="String" default="Expand/Collapse" access="public" description="Tooltip text for nubbin."/>
+    <aura:attribute name="header" type="Aura.Component[]" access="public" description="Header components."/>
+    <aura:attribute name="footer" type="Aura.Component[]" access="public" description="Footer components."/>
+    <!-- component variables -->
+
+    <!-- component handlers  -->
+    <aura:handler name="change" value="{! v.expanded }" action="{! c.handleState }" description=""/>
+    <!-- /component handlers -->
+
+    <!-- component events -->
+    <aura:registerEvent name="ontoggle" type="c:event" description="" />
+    <!-- /component events -->
+
+    <!-- component content -->
+    <div class="{! join(' ', 'lt-section', 'lt-section-collapsed', v.class) }"
+            id="{! v.id }">
+
+        <!-- header -->
+        <div class="lt-section-header"
+                onclick="{! c.toggleState }">
+            <aura:if isTrue="{! not(empty(v.title)) }">
+                <span class="lt-section-header_title">
+                    {! v.title }
+                </span>
+            </aura:if>
+            <span class="lt-section-header_body">
+                {! v.header }
+            </span>
+            <aura:if isTrue="{! v.nubbin }">
+                <a class="lt-section-header_nubbin"
+                        tabindex="0"
+                        title="{! v.nubbinHint }" />
+            </aura:if>
+        </div>
+        <!-- /header -->
+
+        <!-- content -->
+        <div class="lt-section-content">
+
+            <!-- body -->
+            <div class="lt-section-content_body">
+                {! v.body }
+            </div>
+            <!-- /body -->
+
+            <!-- footer -->
+            <div class="lt-section-content_footer">
+                {! v.footer }
+            </div>
+            <!-- /footer -->
+
+        </div>
+        <!-- /content -->
+
+    </div>
+    <!-- /component content -->
+
+</aura:component>
