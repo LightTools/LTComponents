@@ -11,11 +11,11 @@
     <!-- component variables -->
 
     <!-- component handlers  -->
-    <aura:handler name="change" value="{! v.expanded }" action="{! c.handleState }" description=""/>
+    <aura:handler name="change" value="{! v.expanded }" action="{! c.handleState }" description="Handler for section state changes."/>
     <!-- /component handlers -->
 
     <!-- component events -->
-    <aura:registerEvent name="ontoggle" type="c:event" description="" />
+    <aura:registerEvent name="ontoggle" type="c:event" description="Provides ability to handle section state changes. Use event.getParams().data to get the event attributes." />
     <!-- /component events -->
 
     <!-- component content -->
