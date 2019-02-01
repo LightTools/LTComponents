@@ -1,0 +1,25 @@
+<aura:component implements="c:element"
+                extensible="true">
+
+    <!-- component public variables -->
+    <aura:attribute name="type" type="String" default="circle-dots" access="public" description="Look and feel of the spinner. Built-in options: circle, dots, circle-dots. This parameter could be used to customize the spinner with your own css styles outside the component."/>
+    <aura:attribute name="variant" type="String" default="neutral" access="public" description="Built-in options: neutral. This parameter could be used to customize the spinner with your own css styles outside the component."/>
+    <aura:attribute name="size" type="String" default="medium" access="public" description="Built-in options: small, medium, large, x-large. This parameter could be used to customize the spinner with your own css styles outside the component."/>
+    <aura:attribute name="overlay" type="String" default="none" access="public" description="Supported options: none, parent, screen."/>
+    <!-- /component public variables -->
+
+    <!-- component content -->
+    <div class="{! join(' ', 'lt-spinner',
+                   join('_', 'lt-spinner-type', if (not(empty(v.type)), v.type, 'circle-dots')),
+                   join('_', 'lt-spinner-variant', if (not(empty(v.variant)), v.variant, 'neutral')),
+                   join('_', 'lt-spinner-size', if (not(empty(v.size)), v.size, 'medium')),
+                   if (or(equals(v.overlay, 'parent'), equals(v.overlay, 'screen')), join('_', 'lt-spinner-overlay', v.overlay), ''),
+                   v.class) }"
+            id="{! v.id }"
+            title="{! v.title }">
+        <div class="lt-spinner-body" />
+        {! v.body }
+    </div>
+    <!-- /component content -->
+
+</aura:component>
