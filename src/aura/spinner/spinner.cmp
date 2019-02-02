@@ -1,5 +1,6 @@
 <aura:component implements="c:element"
-                extensible="true">
+                extensible="true"
+                description="This component displays an animated spinner.">
 
     <!-- component public variables -->
     <aura:attribute name="type" type="String" default="circle-dots" access="public" description="Look and feel of the spinner. Built-in options: circle, dots, circle-dots. This parameter could be used to customize the spinner with your own css styles outside the component."/>
