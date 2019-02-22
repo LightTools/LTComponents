@@ -154,7 +154,7 @@ public with sharing class DatabaseCtrl {
             // if object exists
             if (Utils.getGlobalDescribe().containsKey(objectName)) {
                 // get describe by object name
-                Schema.DescribeSObjectResult objectDescribe = Utils.getDescribe(objectName);
+                DescribeSObjectResult objectDescribe = Utils.getDescribe(objectName);
                 // create describe config for the object
                 this.set(objectName, new Map<String, Object> {
                     this.KEY_NAME => objectDescribe.getName(),
@@ -177,13 +177,13 @@ public with sharing class DatabaseCtrl {
             }
         }
 
-        private Map<String, Object> getFieldsDescribeConfig(Schema.DescribeSObjectResult objectDescribe) {
+        private Map<String, Object> getFieldsDescribeConfig(DescribeSObjectResult objectDescribe) {
             // create empty result
             Map<String, Object> result = new Map<String, Object>();
             // create config for each field
-            for (Schema.SObjectField field : objectDescribe.fields.getMap().values()) {
+            for (SObjectField field : objectDescribe.fields.getMap().values()) {
                 // get field describe
-                Schema.DescribeFieldResult fieldDescribe = field.getDescribe();
+                DescribeFieldResult fieldDescribe = field.getDescribe();
                 // create field config and add the config to result
                 result.put(fieldDescribe.getName(), new Map<String, Object> {
                     this.KEY_NAME => fieldDescribe.getName(),
@@ -222,11 +222,11 @@ public with sharing class DatabaseCtrl {
             return result;
         }
 
-        private List<String> getFieldReferences(Schema.DescribeFieldResult fieldDescribe) {
+        private List<String> getFieldReferences(DescribeFieldResult fieldDescribe) {
             List<String> result = new List<String>();
             // get all references and convert values to strings
             // because SObjectType class in not supported in JSON
-            for (Schema.SObjectType objectType : fieldDescribe.getReferenceTo()) {
+            for (SObjectType objectType : fieldDescribe.getReferenceTo()) {
                 result.add(String.valueOf(objectType));
             }
             return result;
@@ -357,7 +357,7 @@ public with sharing class DatabaseCtrl {
         // class variables
 
         private String queryObject;
-        private Schema.DescribeSObjectResult parentDescribe;
+        private DescribeSObjectResult parentDescribe;
 
         // class private properties
 
@@ -394,9 +394,9 @@ public with sharing class DatabaseCtrl {
         /**
           * @description Constructor for child queries.
           * @param Object source - instance of Map.
-          * @param Schema.DescribeSObjectResult parentDescribe - describe of parent object.
+          * @param DescribeSObjectResult parentDescribe - describe of parent object.
         */
-        public QueryConfig(Object config, Schema.DescribeSObjectResult parentDescribe) {
+        public QueryConfig(Object config, DescribeSObjectResult parentDescribe) {
             super(config);
             // store parent object describe
             this.parentDescribe = parentDescribe;
@@ -418,7 +418,7 @@ public with sharing class DatabaseCtrl {
         */
         private String getSOQLQuery() {
             // get object describe for query
-            Schema.DescribeSObjectResult queryObjectDescribe = this.getObjectDescribe();
+            DescribeSObjectResult queryObjectDescribe = this.getObjectDescribe();
             // create result query
             String resultQuery = String.format(
                 this.TEMPLATE_SELECT,
@@ -478,8 +478,8 @@ public with sharing class DatabaseCtrl {
             return resultQuery;
         }
 
-        private Schema.DescribeSObjectResult getObjectDescribe() {
-            Schema.DescribeSObjectResult result;
+        private DescribeSObjectResult getObjectDescribe() {
+            DescribeSObjectResult result;
             // get object name from config
             String configObject = this.getString(this.KEY_OBJECT);
             // validation for child queries
@@ -519,7 +519,7 @@ public with sharing class DatabaseCtrl {
             return result;
         }
 
-        private String getQueryFields(Schema.DescribeSObjectResult objectDescribe) {
+        private String getQueryFields(DescribeSObjectResult objectDescribe) {
             // create a new list of fields
             List<String> queryFields = new List<String>();
             if (this.containsKey(this.KEY_FIELDS)) {
@@ -560,7 +560,7 @@ public with sharing class DatabaseCtrl {
             );
         }
 
-        private String getQueryChilds(Schema.DescribeSObjectResult objectDescribe) {
+        private String getQueryChilds(DescribeSObjectResult objectDescribe) {
             String result = Utils.EMPTY_STRING;
             if (this.containsKey(this.KEY_CHILDS)) {
                 // parse childs
@@ -662,7 +662,7 @@ public with sharing class DatabaseCtrl {
         }
 
         private String createSearchEntity(Wrapper config) {
-            Schema.DescribeSObjectResult objectDescribe;
+            DescribeSObjectResult objectDescribe;
             // get object name from config
             String configObject = config.getString(this.KEY_OBJECT);
             // validate entity object
@@ -787,7 +787,7 @@ public with sharing class DatabaseCtrl {
                 throw new DatabaseException().objectNotFound(objectType);
             } else {
                 // get sobject describe
-                Schema.DescribeSObjectResult objectDescribe = Utils.getDescribe(objectType);
+                DescribeSObjectResult objectDescribe = Utils.getDescribe(objectType);
                 // get record state
                 Boolean isCreate = Utils.isNull(recordConfig.get(this.KEY_FIELD_ID));
                 // check CRUD
@@ -801,7 +801,7 @@ public with sharing class DatabaseCtrl {
                 // create a new record
                 result = Utils.getGlobalDescribe().get(objectType).newSObject();
                 // get sobject fields
-                Map<String, Schema.SObjectField> objectFields = objectDescribe.fields.getMap();
+                Map<String, SObjectField> objectFields = objectDescribe.fields.getMap();
                 // parse record fields
                 for (String configField : recordConfig.keys()) {
                     // no need to use sObjectType field from the map
@@ -875,7 +875,7 @@ public with sharing class DatabaseCtrl {
                             // convert item to record id
                             Id recordId = String.valueOf(configItem);
                             // get sobject describe
-                            Schema.DescribeSObjectResult objectDescribe = Utils.getDescribe(recordId.getSObjectType());
+                            DescribeSObjectResult objectDescribe = Utils.getDescribe(recordId.getSObjectType());
                             // validate access rights
                             if (this.enforceCRUD && !objectDescribe.isDeletable()) {
                                 // if no access, show exception
@@ -953,7 +953,7 @@ public with sharing class DatabaseCtrl {
             // create result
             return new DescribeConfig(config).toJSON();
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());    
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);
         }
     }
 
@@ -968,7 +968,7 @@ public with sharing class DatabaseCtrl {
             // create result
             return new QueryConfig(config).soqlQuery;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());    
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);
         }
     }
 
@@ -983,7 +983,7 @@ public with sharing class DatabaseCtrl {
             // create result
             return new QueryConfig(config).soslQuery;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());    
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);  
         }
     }
 
@@ -1007,7 +1007,7 @@ public with sharing class DatabaseCtrl {
                 new DatabaseWithoutSharing().callQuery(queryConfigWrapper.soqlQuery)
             );
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());    
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);
         }
     }
 
@@ -1031,7 +1031,7 @@ public with sharing class DatabaseCtrl {
                 new DatabaseWithoutSharing().callSearch(queryConfigWrapper.soslQuery)
             );
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());    
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);
         }
     }
 
@@ -1068,11 +1068,8 @@ public with sharing class DatabaseCtrl {
             }
             // create result
             return JSON.serialize(saveConfigWrapper.records);
-        } catch (DMLException e) {
-            // no need to wrap DML exceptions
-            throw e;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());    
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);
         }
     }
 
@@ -1096,11 +1093,8 @@ public with sharing class DatabaseCtrl {
             }
             // just a dummy result
             return true;
-        } catch (DMLException e) {
-            // no need to wrap DML exceptions
-            throw e;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());    
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);
         }
     }
 

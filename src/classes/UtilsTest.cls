@@ -38,6 +38,17 @@ private class UtilsTest {
         Test.stopTest();
     }
 
+    @isTest static void createAuraExceptionTest() {
+        // start test
+        Test.startTest();
+        // test DMLException
+        System.assert(Utils.createAuraException(new DMLException()) instanceof DMLException);
+        // test Custom Exception
+        System.assert(Utils.createAuraException(new Utils.CustomException()) instanceof AuraHandledException);
+        // end test
+        Test.stopTest();
+    }
+
     @isTest static void describeCacheTest() {
         // start test
         Test.startTest();
