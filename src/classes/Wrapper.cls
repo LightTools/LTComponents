@@ -48,7 +48,7 @@ public virtual class Wrapper {
       * @description Method to get the map's keys.
       * @return Set - set of the map's keys.
     */
-    public Set<String> keys() {
+    public virtual Set<String> keys() {
         return this.params.keySet();
     }
 
@@ -56,7 +56,7 @@ public virtual class Wrapper {
       * @description Method to get the map's values.
       * @return List - list of the map's values.
     */
-    public List<Object> values() {
+    public virtual List<Object> values() {
         return this.params.values();
     }
 
@@ -65,7 +65,7 @@ public virtual class Wrapper {
       * @param String key - map key to check.
       * @return Boolean - if key exists in the map - true, otherwise false.
     */
-    public Boolean containsKey(String key) {
+    public virtual Boolean containsKey(String key) {
         return this.params.containsKey(key);
     }
 
@@ -74,7 +74,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return Object - value from the map.
     */
-    public Object get(String key) {
+    public virtual Object get(String key) {
         return this.params.get(key);
     }
 
@@ -83,7 +83,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return String - value from the map.
     */
-    public String getString(String key) {
+    public virtual String getString(String key) {
         return String.valueOf(this.get(key));
     }
 
@@ -92,7 +92,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return Boolean - value from the map.
     */
-    public Boolean getBoolean(String key) {
+    public virtual Boolean getBoolean(String key) {
         return Boolean.valueOf(this.get(key));
     }
 
@@ -101,7 +101,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return Integer - value from the map.
     */
-    public Integer getInteger(String key) {
+    public virtual Integer getInteger(String key) {
         return Integer.valueOf(this.get(key));
     }
 
@@ -110,7 +110,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return Decimal - value from the map.
     */
-    public Decimal getDecimal(String key) {
+    public virtual Decimal getDecimal(String key) {
         return Decimal.valueOf(this.getString(key));
     }
 
@@ -119,7 +119,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return List - value from the map.
     */
-    public List<Object> getList(String key) {
+    public virtual List<Object> getList(String key) {
         return (List<Object>)this.get(key);
     }
 
@@ -128,7 +128,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return Map - value from the map.
     */
-    public Map<String, Object> getMap(String key) {
+    public virtual Map<String, Object> getMap(String key) {
         return (Map<String, Object>)this.get(key);
     }
 
@@ -137,7 +137,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @return Wrapper - value from the map.
     */
-    public Wrapper getWrapper(String key) {
+    public virtual Wrapper getWrapper(String key) {
         return new Wrapper(this.get(key));
     }
 
@@ -146,7 +146,7 @@ public virtual class Wrapper {
       * @param String key - map key.
       * @param Object value - value of any type.
     */
-    public Wrapper set(String key, Object value) {
+    public virtual Wrapper set(String key, Object value) {
         this.params.put(key, value);
         return this;
     }
@@ -155,7 +155,7 @@ public virtual class Wrapper {
       * @description Method to add external map to the map.
       * @param Map source - external map.
     */
-    public Wrapper setParams(Map<String, Object> source) {
+    public virtual Wrapper setParams(Map<String, Object> source) {
         this.params.putAll(source);
         return this;
     }
@@ -164,7 +164,7 @@ public virtual class Wrapper {
       * @description Method to check if the wrapper is an empty.
       * @return String - JSON.
     */
-    public Boolean isEmpty() {
+    public virtual Boolean isEmpty() {
         return this.params.isEmpty();
     }
 
@@ -172,7 +172,7 @@ public virtual class Wrapper {
       * @description Method to convert the map to JSON.
       * @return String - JSON.
     */
-    public String toJSON() {
+    public virtual String toJSON() {
         return JSON.serialize(this.params);
     }
 }
