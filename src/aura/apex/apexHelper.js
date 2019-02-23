@@ -54,11 +54,12 @@
             "data": null
         },
         // inner methods
-        createMessage = function(type, message, code) {
+        createMessage = function(type, message, code, details) {
             return {
                 "type": type,
                 "message": message,
-                "code": code
+                "code": code,
+                "details": details
             };
         },
         createErrors = function(errors) {
@@ -73,7 +74,8 @@
                 return createMessage(
                     "ERROR",
                     error.message,
-                    error.statusCode
+                    error.statusCode,
+                    error.details
                 );
             };
             for (let error of errors) {

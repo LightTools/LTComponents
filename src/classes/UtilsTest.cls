@@ -21,7 +21,7 @@ private class UtilsTest {
             // create exception for test
             Utils.CustomException exceptionForTest = new Utils.CustomException();
             // set exception content
-            exceptionForTest.setMessage(TEST_EXCEPTION_CODE, TEST_EXCEPTION_MESSAGE);
+            exceptionForTest.setMessage(TEST_EXCEPTION_CODE, TEST_EXCEPTION_MESSAGE, null);
             // throw exception
             throw exceptionForTest;
         } catch (Utils.CustomException e) {

@@ -226,6 +226,7 @@ public with sharing class Utils {
 
         private final String KEY_CODE = 'statusCode';
         private final String KEY_MESSAGE = 'message';
+        private final String KEY_DETAILS = 'details';
 
         // class methods
 
@@ -234,12 +235,13 @@ public with sharing class Utils {
           * @param String code - specific exception's code.
           * @param String message - exception's message.
         */
-        public virtual void setMessage(String code, String message) {
+        public virtual void setMessage(String code, String message, Object details) {
             // call method from super class
             super.setMessage(
                 // wrap code and message to JSON
                 new Wrapper().set(this.KEY_CODE, code)
                              .set(this.KEY_MESSAGE, message)
+                             .set(this.KEY_DETAILS, details)
                              .toJSON()
             );
         }

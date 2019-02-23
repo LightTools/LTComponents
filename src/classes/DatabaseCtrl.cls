@@ -14,72 +14,78 @@ public with sharing class DatabaseCtrl {
 
         // class constants
 
-        private final String CODE_DATABASE_INTEGRITY = 'DATABASE_INTEGRITY';
-        private final String CODE_ACCESS_DENIED = 'ACCESS_DENIED';
+        private final String CODE_OBJECT_NOT_FOUND = 'DATABASE_OBJECT_NOT_FOUND';
+        private final String CODE_RELATIONSHIP_NOT_FOUND = 'DATABASE_RELATIONSHIP_NOT_FOUND';
+        private final String CODE_OBJECT_NOT_ACCESSIBLE = 'DATABASE_OBJECT_NOT_ACCESSIBLE';
+        private final String CODE_OBJECT_NOT_QUERYABLE = 'DATABASE_OBJECT_NOT_QUERYABLE';
+        private final String CODE_OBJECT_NOT_CREATEABLE = 'DATABASE_OBJECT_NOT_CREATEABLE';
+        private final String CODE_OBJECT_NOT_UPDATEABLE = 'DATABASE_OBJECT_NOT_UPDATEABLE';
+        private final String CODE_OBJECT_NOT_DELETEABLE = 'DATABASE_OBJECT_NOT_DELETEABLE';
+        private final String CODE_OBJECTTYPE_NOT_DEFINED = 'DATABASE_OBJECTTYPE_NOT_DEFINED';
 
         // class methods
 
         public DatabaseException objectNotFound(String objectName) {
-            this.setMessage(this.CODE_DATABASE_INTEGRITY, String.format(
+            this.setMessage(this.CODE_OBJECT_NOT_FOUND, String.format(
                 'Object {0} is not found.',
                 new List<String>{ objectName }
-            ));
+            ), objectName);
             return this;
         }
 
         public DatabaseException relationshipNotFound(String objectName) {
-            this.setMessage(this.CODE_DATABASE_INTEGRITY, String.format(
+            this.setMessage(this.CODE_RELATIONSHIP_NOT_FOUND, String.format(
                 'Relationship {0} is not found.',
                 new List<String>{ objectName }
-            ));
+            ), objectName);
             return this;
         }
 
         public DatabaseException objectNotAccessible(String objectName) {
-            this.setMessage(this.CODE_ACCESS_DENIED, String.format(
+            this.setMessage(this.CODE_OBJECT_NOT_ACCESSIBLE, String.format(
                 'Object {0} is not accessible.',
                 new List<String>{ objectName }
-            ));
+            ), objectName);
             return this;
         }
 
         public DatabaseException objectNotQueryable(String objectName) {
-            this.setMessage(this.CODE_ACCESS_DENIED, String.format(
+            this.setMessage(this.CODE_OBJECT_NOT_QUERYABLE, String.format(
                 'Object {0} is not queryable.',
                 new List<String>{ objectName }
-            ));
+            ), objectName);
             return this;
         }
 
         public DatabaseException objectNotCreateable(String objectName) {
-            this.setMessage(this.CODE_ACCESS_DENIED, String.format(
+            this.setMessage(this.CODE_OBJECT_NOT_CREATEABLE, String.format(
                 'Object {0} is not createable.',
                 new List<String>{ objectName }
-            ));
+            ), objectName);
             return this;
         }
 
         public DatabaseException objectNotUpdateable(String objectName) {
-            this.setMessage(this.CODE_ACCESS_DENIED, String.format(
+            this.setMessage(this.CODE_OBJECT_NOT_UPDATEABLE, String.format(
                 'Object {0} is not updateable.',
                 new List<String>{ objectName }
-            ));
+            ), objectName);
             return this;
         }
 
         public DatabaseException objectNotDeleteable(String objectName) {
-            this.setMessage(this.CODE_ACCESS_DENIED, String.format(
+            this.setMessage(this.CODE_OBJECT_NOT_DELETEABLE, String.format(
                 'Object {0} is not deleteable.',
                 new List<String>{ objectName }
-            ));
+            ), objectName);
             return this;
         }
 
         public DatabaseException objectTypeNotDefined(Object record) {
-            this.setMessage(this.CODE_DATABASE_INTEGRITY, String.format(
+            this.setMessage(this.CODE_OBJECTTYPE_NOT_DEFINED, String.format(
                 'Object type is not defined for the record {0}.',
                 new List<String>{ JSON.serialize(record) }
-            ));
+            ), record);
             return this;
         }
 
