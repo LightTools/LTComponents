@@ -252,10 +252,15 @@ public with sharing class Utils {
         IDebugProxy result;
         // check if Debug Proxy implementation exists
         Type debugProxy = Type.forName(Utils.DEBUG_PROXY_CLASS_NAME);
-        // if debug proxy class exists
+        // if Debug Proxy class exists
         if (Utils.isNotNull(debugProxy)) {
-            // create an instance
-            result = (IDebugProxy)debugProxy.newInstance();
+            // try to create an instance
+            try {
+                // create an instance
+                result = (IDebugProxy)debugProxy.newInstance();
+            } catch (Exception e) {
+                // class doesn't implement IDebugProxy interface
+            }
         }
         // return result
         return result;
