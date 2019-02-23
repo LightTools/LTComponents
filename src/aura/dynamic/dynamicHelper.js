@@ -91,39 +91,20 @@
                 component.getEvent("onchange").fire({
                     "data": result
                 });
-                // call after change
-                this.afterChange(component, result);
             }
         }.bind(this));
         // try to create components
         try {
-            // if beforeChange returns true
-            if (this.beforeChange(component)) {
-                // call aura
-                $A.createComponents(
-                    // set config [[component name, {attributes}],...]
-                    config,
-                    // set callback function
-                    handleResponse
-                );
-            }
+            // call aura
+            $A.createComponents(
+                // set config [[component name, {attributes}],...]
+                config,
+                // set callback function
+                handleResponse
+            );
         } catch(e) {
             // return null as response
             handleResponse(null, "ERROR", e);
         }
-    },
-    /**
-      * @description This method is being called before creation starts. Can be overridden in component that extends dynamic.
-      * @param Object component - component reference.
-      * @return Boolean - true/false to allow/reject components creation.
-    */
-    beforeChange : function(component) {
-        return true;
-    },
-    /**
-      * @description This method is being called when creation finishing. Can be overridden in component that extends dynamic.
-      * @param Object component - component reference.
-      * @param Object result - contains creation state and error messages.
-    */
-    afterChange : function(component, result) {}
+    }
 })
