@@ -7,9 +7,20 @@ public with sharing class Utils {
     // class constants
 
     private static final String DEBUG_PROXY_CLASS_NAME = 'DebugProxy';
-
-    private static final DescribeCache DESCRIBE_CACHE = new DescribeCache();
     private static final IDebugProxy DEBUG_PROXY = Utils.getDebugProxy();
+
+    private static final DescribeCache DESCRIBE_CACHE {
+        get {
+            // if describe cache is null
+            if (Utils.isNull(Utils.DESCRIBE_CACHE)) {
+                // create describe cache
+                Utils.DESCRIBE_CACHE = new DescribeCache();
+            }
+            // return instance
+            return Utils.DESCRIBE_CACHE;
+        }
+        set;
+    }
 
     public static final String DEBUG_SEPARATOR = ' -> ';
     public static final String WHITESPACE = ' ';
@@ -241,8 +252,9 @@ public with sharing class Utils {
         IDebugProxy result;
         // check if Debug Proxy implementation exists
         Type debugProxy = Type.forName(Utils.DEBUG_PROXY_CLASS_NAME);
-        // if exists - running proxy
+        // if debug proxy class exists
         if (Utils.isNotNull(debugProxy)) {
+            // create an instance
             result = (IDebugProxy)debugProxy.newInstance();
         }
         // return result
