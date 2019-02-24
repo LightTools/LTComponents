@@ -21,11 +21,12 @@ public with sharing class DatabaseCtrl {
         private final String CODE_OBJECT_NOT_CREATEABLE = 'DATABASE_OBJECT_NOT_CREATEABLE';
         private final String CODE_OBJECT_NOT_UPDATEABLE = 'DATABASE_OBJECT_NOT_UPDATEABLE';
         private final String CODE_OBJECT_NOT_DELETEABLE = 'DATABASE_OBJECT_NOT_DELETEABLE';
+        private final String CODE_OBJECT_NOT_UNDELETEABLE = 'DATABASE_OBJECT_NOT_UNDELETEABLE';
         private final String CODE_OBJECTTYPE_NOT_DEFINED = 'DATABASE_OBJECTTYPE_NOT_DEFINED';
 
         // class methods
 
-        public DatabaseException objectNotFound(String objectName) {
+        private DatabaseException objectNotFound(String objectName) {
             this.setMessage(this.CODE_OBJECT_NOT_FOUND, String.format(
                 'Object {0} is not found.',
                 new List<String>{ objectName }
@@ -33,7 +34,7 @@ public with sharing class DatabaseCtrl {
             return this;
         }
 
-        public DatabaseException relationshipNotFound(String objectName) {
+        private DatabaseException relationshipNotFound(String objectName) {
             this.setMessage(this.CODE_RELATIONSHIP_NOT_FOUND, String.format(
                 'Relationship {0} is not found.',
                 new List<String>{ objectName }
@@ -41,7 +42,7 @@ public with sharing class DatabaseCtrl {
             return this;
         }
 
-        public DatabaseException objectNotAccessible(String objectName) {
+        private DatabaseException objectNotAccessible(String objectName) {
             this.setMessage(this.CODE_OBJECT_NOT_ACCESSIBLE, String.format(
                 'Object {0} is not accessible.',
                 new List<String>{ objectName }
@@ -49,7 +50,7 @@ public with sharing class DatabaseCtrl {
             return this;
         }
 
-        public DatabaseException objectNotQueryable(String objectName) {
+        private DatabaseException objectNotQueryable(String objectName) {
             this.setMessage(this.CODE_OBJECT_NOT_QUERYABLE, String.format(
                 'Object {0} is not queryable.',
                 new List<String>{ objectName }
@@ -57,7 +58,7 @@ public with sharing class DatabaseCtrl {
             return this;
         }
 
-        public DatabaseException objectNotCreateable(String objectName) {
+        private DatabaseException objectNotCreateable(String objectName) {
             this.setMessage(this.CODE_OBJECT_NOT_CREATEABLE, String.format(
                 'Object {0} is not createable.',
                 new List<String>{ objectName }
@@ -65,7 +66,7 @@ public with sharing class DatabaseCtrl {
             return this;
         }
 
-        public DatabaseException objectNotUpdateable(String objectName) {
+        private DatabaseException objectNotUpdateable(String objectName) {
             this.setMessage(this.CODE_OBJECT_NOT_UPDATEABLE, String.format(
                 'Object {0} is not updateable.',
                 new List<String>{ objectName }
@@ -73,7 +74,7 @@ public with sharing class DatabaseCtrl {
             return this;
         }
 
-        public DatabaseException objectNotDeleteable(String objectName) {
+        private DatabaseException objectNotDeleteable(String objectName) {
             this.setMessage(this.CODE_OBJECT_NOT_DELETEABLE, String.format(
                 'Object {0} is not deleteable.',
                 new List<String>{ objectName }
@@ -81,7 +82,15 @@ public with sharing class DatabaseCtrl {
             return this;
         }
 
-        public DatabaseException objectTypeNotDefined(Object record) {
+        private DatabaseException objectNotUndeleteable(String objectName) {
+            this.setMessage(this.CODE_OBJECT_NOT_UNDELETEABLE, String.format(
+                'Object {0} is not undeleteable.',
+                new List<String>{ objectName }
+            ), objectName);
+            return this;
+        }
+
+        private DatabaseException objectTypeNotDefined(Object record) {
             this.setMessage(this.CODE_OBJECTTYPE_NOT_DEFINED, String.format(
                 'Object type is not defined for the record {0}.',
                 new List<String>{ JSON.serialize(record) }
@@ -144,7 +153,7 @@ public with sharing class DatabaseCtrl {
           * @description Constructor with param.
           * @param String source - serialized javascript object.
         */
-        public DescribeConfig(String config) {
+        private DescribeConfig(String config) {
             // if config is defined
             if (String.isNotBlank(config)) {
                 // create describe for defined objects
@@ -286,8 +295,8 @@ public with sharing class DatabaseCtrl {
 
         // class public properties
 
-        public Boolean enforceSharing {
-            public get {
+        private Boolean enforceSharing {
+            private get {
                 if (Utils.isNull(this.enforceSharing)) {
                     // get Sharing state from config
                     this.enforceSharing = (
@@ -307,7 +316,7 @@ public with sharing class DatabaseCtrl {
           * @description Constructor with param.
           * @param Object source - instance of Map.
         */
-        public DMLConfig(Object config) {
+        private DMLConfig(Object config) {
             super(config);
         }
 
@@ -315,7 +324,7 @@ public with sharing class DatabaseCtrl {
           * @description Constructor with param.
           * @param String source - serialized javascript object.
         */
-        public DMLConfig(String config) {
+        private DMLConfig(String config) {
             super(config);
         }
 
@@ -375,8 +384,8 @@ public with sharing class DatabaseCtrl {
 
         // class public properties
 
-        public String soqlQuery {
-            public get {
+        private String soqlQuery {
+            private get {
                 if (Utils.isNull(this.soqlQuery)) {
                     this.soqlQuery = this.getSOQLQuery();
                 }
@@ -385,8 +394,8 @@ public with sharing class DatabaseCtrl {
             private set;
         }
 
-        public String soslQuery {
-            public get {
+        private String soslQuery {
+            private get {
                 if (Utils.isNull(this.soslQuery)) {
                     this.soslQuery = this.getSOSLQuery();
                 }
@@ -402,7 +411,7 @@ public with sharing class DatabaseCtrl {
           * @param Object source - instance of Map.
           * @param DescribeSObjectResult parentDescribe - describe of parent object.
         */
-        public QueryConfig(Object config, DescribeSObjectResult parentDescribe) {
+        private QueryConfig(Object config, DescribeSObjectResult parentDescribe) {
             super(config);
             // store parent object describe
             this.parentDescribe = parentDescribe;
@@ -412,7 +421,7 @@ public with sharing class DatabaseCtrl {
           * @description Constructor with param.
           * @param String source - serialized javascript object.
         */
-        public QueryConfig(String config) {
+        private QueryConfig(String config) {
             super(config);
         }
 
@@ -738,8 +747,8 @@ public with sharing class DatabaseCtrl {
 
         // class properties
 
-        public List<SObject> records {
-            public get {
+        private List<SObject> records {
+            private get {
                 if (Utils.isNull(this.records)) {
                     this.records = this.getRecords();
                 }
@@ -754,7 +763,7 @@ public with sharing class DatabaseCtrl {
           * @description Constructor with param.
           * @param String source - serialized javascript object.
         */
-        public SaveConfig(String config) {
+        private SaveConfig(String config) {
             super(config);
         }
 
@@ -836,7 +845,7 @@ public with sharing class DatabaseCtrl {
       * @description Wrapper for remove method config.
       * @author Sergey Chepurnenko
     */
-    private class RemoveConfig extends DMLConfig {
+    private virtual class RemoveConfig extends DMLConfig {
 
         // class constants
 
@@ -844,8 +853,8 @@ public with sharing class DatabaseCtrl {
 
         // class properties
 
-        public List<Id> recordIds {
-            public get {
+        private List<Id> recordIds {
+            private get {
                 if (Utils.isNull(this.recordIds)) {
                     this.recordIds = this.getRecordIds();
                 }
@@ -860,7 +869,7 @@ public with sharing class DatabaseCtrl {
           * @description Constructor with param.
           * @param String source - serialized javascript object.
         */
-        public RemoveConfig(String config) {
+        private RemoveConfig(String config) {
             super(config);
         }
 
@@ -880,13 +889,8 @@ public with sharing class DatabaseCtrl {
                         if (Utils.isNotNull(configItem)) {
                             // convert item to record id
                             Id recordId = String.valueOf(configItem);
-                            // get sobject describe
-                            DescribeSObjectResult objectDescribe = Utils.getDescribe(recordId.getSObjectType());
                             // validate access rights
-                            if (this.enforceCRUD && !objectDescribe.isDeletable()) {
-                                // if no access, show exception
-                                throw new DatabaseException().objectNotUpdateable(objectDescribe.getName());
-                            }
+                            this.validateRecordAccess(Utils.getDescribe(recordId.getSObjectType()));
                             // add record id to result
                             result.add(recordId);
                         }
@@ -894,6 +898,40 @@ public with sharing class DatabaseCtrl {
                 }
             }
             return result;
+        }
+
+        private virtual void validateRecordAccess(DescribeSObjectResult objectDescribe) {
+            if (this.enforceCRUD && !objectDescribe.isDeletable()) {
+                // if no access, show exception
+                throw new DatabaseException().objectNotDeleteable(objectDescribe.getName());
+            }
+        }
+
+    }
+
+    /** 
+      * @description Wrapper for restore method config.
+      * @author Sergey Chepurnenko
+    */
+    private virtual class RestoreConfig extends RemoveConfig {
+
+        // class constructors
+
+        /**
+          * @description Constructor with param.
+          * @param String source - serialized javascript object.
+        */
+        private RestoreConfig(String config) {
+            super(config);
+        }
+
+        // class methods
+
+        private override void validateRecordAccess(DescribeSObjectResult objectDescribe) {
+            if (this.enforceCRUD && !objectDescribe.isUndeletable()) {
+                // if no access, show exception
+                throw new DatabaseException().objectNotUndeleteable(objectDescribe.getName());
+            }
         }
 
     }
@@ -908,7 +946,7 @@ public with sharing class DatabaseCtrl {
           * @description Database.query() method without sharing.
           * @return Object - result from a database.
         */
-        public Object callQuery(String queryString) {
+        private Object callQuery(String queryString) {
             return Database.query(queryString);
         }
 
@@ -916,7 +954,7 @@ public with sharing class DatabaseCtrl {
           * @description Search.query() method without sharing.
           * @return Object - result from a database.
         */
-        public Object callSearch(String queryString) {
+        private Object callSearch(String queryString) {
             return Search.query(queryString);
         }
 
@@ -924,7 +962,7 @@ public with sharing class DatabaseCtrl {
           * @description Database.insert() method without sharing.
           * @return List<Database.SaveResult> - DML result.
         */
-        public List<Database.SaveResult> callInsert(List<SObject> records) {
+        private List<Database.SaveResult> callInsert(List<SObject> records) {
             return Database.insert(records);
         }
 
@@ -932,7 +970,7 @@ public with sharing class DatabaseCtrl {
           * @description Database.update() method without sharing.
           * @return List<Database.SaveResult> - DML result.
         */
-        public List<Database.SaveResult> callUpdate(List<SObject> records) {
+        private List<Database.SaveResult> callUpdate(List<SObject> records) {
             return Database.update(records);
         }
 
@@ -940,8 +978,16 @@ public with sharing class DatabaseCtrl {
           * @description Database.delete() method without sharing.
           * @return List<Database.DeleteResult> - DML result.
         */
-        public List<Database.DeleteResult> callDelete(List<Id> recordIds) {
+        private List<Database.DeleteResult> callDelete(List<Id> recordIds) {
             return Database.delete(recordIds);
+        }
+
+        /**
+          * @description Database.undelete() method without sharing.
+          * @return List<Database.UndeleteResult> - DML result.
+        */
+        private List<Database.UndeleteResult> callUndelete(List<Id> recordIds) {
+            return Database.undelete(recordIds);
         }
 
     } 
@@ -1096,6 +1142,31 @@ public with sharing class DatabaseCtrl {
             } else {
                 // without sharing
                 new DatabaseWithoutSharing().callDelete(removeConfigWrapper.recordIds);
+            }
+            // just a dummy result
+            return true;
+        } catch (Exception e) {
+            throw Utils.createAuraException(DatabaseCtrl.class.getName(), e);
+        }
+    }
+
+    /**
+      * @description Method to undelete records.
+      * @param String config - serialized javascript object.
+      * @return Boolean - true if undelete is successed.
+    */
+    @AuraEnabled
+    public static Boolean restore(String config) {
+        try {
+            // create DML wrapper
+            RestoreConfig restoreConfigWrapper = new RestoreConfig(config);
+            // remove records
+            if (restoreConfigWrapper.enforceSharing) {
+                // with sharing
+                Database.undelete(restoreConfigWrapper.recordIds);
+            } else {
+                // without sharing
+                new DatabaseWithoutSharing().callUndelete(restoreConfigWrapper.recordIds);
             }
             // just a dummy result
             return true;

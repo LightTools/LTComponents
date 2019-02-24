@@ -45,6 +45,11 @@
         <aura:attribute name="callback" type="Function" description="External function to handle response from server." />
         <aura:attribute name="options" type="Object" description="Optional params (background, abortable, storable, ignoreExisting - valid only if storable === true)." />  
     </aura:method>
+    <aura:method name="restore" action="{! c.callMethod }" description="Method to restore records from recycle bin."> 
+        <aura:attribute name="config" type="Object" required="true" description="This object should contain record Ids to restore and DML options." />
+        <aura:attribute name="callback" type="Function" description="External function to handle response from server." />
+        <aura:attribute name="options" type="Object" description="Optional params (background, abortable, storable, ignoreExisting - valid only if storable === true)." />  
+    </aura:method>
     <!-- /data methods -->
 
 </aura:component>
