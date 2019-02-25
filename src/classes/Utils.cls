@@ -117,8 +117,6 @@ public with sharing class Utils {
             DescribeSObjectResult objectDescribe = this.getObjectDescribe(objectName);
             // validate describe result
             if (Utils.isNotNull(objectDescribe)) {
-                // get object fields from describe
-                Map<String, SObjectField> objectFields = objectDescribe.fields.getMap();
                 // initialize current fields cache
                 Map<String, DescribeFieldResult> objectFieldsCache = this.fieldsDescribe.get(objectName);
                 // if cache is empty (this should happen only for first time)
