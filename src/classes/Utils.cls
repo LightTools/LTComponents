@@ -156,6 +156,8 @@ public with sharing class Utils {
         // class constants
 
         private final String SEPARATOR_REFERENCE = '.';
+        private final String POSTFIX_REFERENCE = '__r';
+        private final String POSTFIX_FIELD = '__c';
 
         // class variables
 
@@ -175,7 +177,7 @@ public with sharing class Utils {
                 // check field type
                 if (fieldName.contains(this.SEPARATOR_REFERENCE)) {
                     // in case of referecne, get first field from chain
-                    String objectReference = fieldName.substringBefore(this.SEPARATOR_REFERENCE).replace('__r', '__c');
+                    String objectReference = fieldName.substringBefore(this.SEPARATOR_REFERENCE).replace(this.POSTFIX_REFERENCE, this.POSTFIX_FIELD);
                     // get reference field describe
                     DescribeFieldResult objectReferenceDescribe = Utils.DESCRIBE_CACHE.getFieldDescribe(
                         objectReference,
