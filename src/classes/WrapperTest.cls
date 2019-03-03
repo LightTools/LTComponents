@@ -35,13 +35,13 @@ private class WrapperTest {
         // start test
         Test.startTest();
         // create empty wrapper
-        Wrapper wrapperEmpty = new Wrapper();
+        Wrapper wrapperEmpty = Wrapper.newInstance();
         // create empty wrapper from empty string for source
-        Wrapper wrapperEmptyFromEmptyString = new Wrapper(Utils.EMPTY_STRING);
+        Wrapper wrapperEmptyFromEmptyString = Wrapper.newInstance(Utils.EMPTY_STRING);
         // create wrapper from map
-        Wrapper wrapperFromMap = new Wrapper(sourceForTest);
+        Wrapper wrapperFromMap = Wrapper.newInstance(sourceForTest);
         // create wrapper from map
-        Wrapper wrapperFromJSON = new Wrapper(JSON.serialize(sourceForTest));
+        Wrapper wrapperFromJSON = Wrapper.newInstance(JSON.serialize(sourceForTest));
         // end test
         Test.stopTest();
 
@@ -60,7 +60,7 @@ private class WrapperTest {
 
     @isTest static void methodsTest() {
         // create data for test
-        Map<String, Object> paramsForTest = new Map<String, Object> {
+        Map<String, Object> mapForTest = new Map<String, Object> {
             TEST_KEY_STRING => TEST_VALUE_STRING,
             TEST_KEY_NULL => TEST_VALUE_NULL,
             TEST_KEY_BOOLEAN => TEST_VALUE_BOOLEAN,
@@ -73,18 +73,22 @@ private class WrapperTest {
         // start test
         Test.startTest();
         // create empty wrapper
-        Wrapper wrapperEmpty = new Wrapper();
+        Wrapper wrapperEmpty = Wrapper.newInstance();
         // set string key just to test set method
         wrapperEmpty.set(TEST_KEY_STRING, TEST_VALUE_STRING);
-        // set params
-        wrapperEmpty.setParams(paramsForTest);
+        // set map
+        wrapperEmpty.set(mapForTest);
+        // clone map
+        Wrapper wrapperClone = Wrapper.newInstance(wrapperEmpty);
+        // remove key from the cloned wrapper
+        Object removedValue = wrapperClone.remove(TEST_KEY_STRING);
         // end test
         Test.stopTest();
 
         // validate wrapper params
         System.assertEquals(false, wrapperEmpty.isEmpty());
-        System.assertEquals(paramsForTest.keySet(), wrapperEmpty.keys());
-        System.assertEquals(paramsForTest.values(), wrapperEmpty.values());
+        System.assertEquals(mapForTest.keySet(), wrapperEmpty.keys());
+        System.assertEquals(mapForTest.values(), wrapperEmpty.values());
 
         // validate wrapper keys
         System.assertEquals(true, wrapperEmpty.containsKey(TEST_KEY_STRING));
@@ -105,6 +109,13 @@ private class WrapperTest {
 
         // validate toJSON method
         System.assertEquals(JSON.serialize(TEST_VALUE_MAP), wrapperEmpty.getWrapper(TEST_KEY_MAP).toJSON());
+
+        // validate clear method
+        System.assertEquals(true, wrapperEmpty.clear().isEmpty());
+
+        // validate remove method
+        System.assertEquals(true, Utils.isNull(wrapperClone.get(TEST_KEY_STRING)));
+        System.assertEquals(TEST_VALUE_STRING, removedValue);
     }
 
 }
