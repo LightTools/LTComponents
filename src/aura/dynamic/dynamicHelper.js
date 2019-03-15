@@ -56,23 +56,42 @@
                 // create result to return with onchange event
                 let result = {
                     "isSuccess": false,
-                    "state": state,
-                    "errors": null
+                    "state": null,
+                    "errors": null,
+                    "components": null
                 };
-                // check state
+                // create components from response if it's not empty, as the error state doesn't mean that there are no components in response
+                if (!$A.util.isEmpty(response)) {
+                    try {
+                        // check for empty items
+                        for (let item of response) {
+                            // if item is not empty
+                            if (!$A.util.isEmpty(item)) {
+                                // check if array of components in result is null and create a new array
+                                if ($A.util.isEmpty(result.components)) {
+                                    // create a new array in result
+                                    result.components = [];
+                                }
+                                // add not empty item to result
+                                result.components.push(item);
+                            }
+                        }
+                        // create components
+                        callback(result.components);
+                    } catch(e) {
+                        // override state
+                        state = "ERROR";
+                        // override errors
+                        errors = e;
+                    }
+                }
+                // assign state to result
+                result.state = state;
+                // check state and assign errors
                 switch (state) {
                     case "SUCCESS":
-                        // return response
-                        try {
-                            callback(response);
-                            // set isSuccess in result in case of real success
-                            result.isSuccess = true;
-                        } catch(e) {
-                            // set error to result
-                            result.errors = e;
-                            // change state in result
-                            result.state = "ERROR";
-                        }
+                        // set isSuccess in result
+                        result.isSuccess = true;
                         break;
                     case "ERROR":
                         // set error to result
